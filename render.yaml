@@ -3,7 +3,9 @@ services:
     name: scribeflow
     env: node
     plan: free
-    buildCommand: npm ci && npm run build
+    # NODE_ENV=production makes npm omit devDependencies, but the build needs
+    # them (typescript, @types/*, vite). --include=dev forces them in.
+    buildCommand: npm ci --include=dev && npm run build
     startCommand: npm run start
     healthCheckPath: /api/health
     envVars:
